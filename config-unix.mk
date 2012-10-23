@@ -73,6 +73,7 @@ endif
 ifeq (Linux,$(uname_S))
 EV_CONFIG=config_linux.h
 CSTDFLAG += -D_GNU_SOURCE
+CFLAGS += -fPIC
 LINKFLAGS+=-ldl -lrt
 OBJS += src/unix/linux/linux-core.o \
         src/unix/linux/inotify.o    \
@@ -131,6 +132,9 @@ RUNNER_SRC=test/runner-unix.c
 libuv.a: $(OBJS) src/fs-poll.o src/inet.o src/uv-common.o src/unix/ev/ev.o
 	$(AR) rcs $@ $^
 
+libuv.so.0.0.0: $(OBJS) src/fs-poll.o src/inet.o src/uv-common.o src/unix/ev/ev.o
+	$(CC) -shared -o $@ $^
+
 src/%.o: src/%.c include/uv.h include/uv-private/uv-unix.h
 	$(CC) $(CSTDFLAG) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
@@ -144,10 +148,12 @@ clean-platform:
 	-rm -f src/unix/*.o
 	-rm -f src/unix/ev/*.o
 	-rm -f src/unix/linux/*.o
+	-rm -f libuv.a libuv.so*
 	-rm -rf test/run-tests.dSYM run-benchmarks.dSYM
 
 distclean-platform:
 	-rm -f src/unix/*.o
 	-rm -f src/unix/ev/*.o
 	-rm -f src/unix/linux/*.o
+	-rm -f libuv.a libuv.so*
 	-rm -rf test/run-tests.dSYM run-benchmarks.dSYM

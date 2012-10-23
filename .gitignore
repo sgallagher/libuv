@@ -3,6 +3,7 @@
 *.lo
 *.la
 *.a
+*.so*
 *.opensdf
 *.orig
 *.sdf

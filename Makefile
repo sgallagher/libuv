@@ -37,6 +37,8 @@ BENCHMARKS=test/blackhole-server.c test/echo-server.c test/dns-server.c test/ben
 
 all: libuv.a
 
+shared: libuv.so.0.0.0
+
 test/run-tests$(E): test/*.h test/run-tests.c $(RUNNER_SRC) test/runner-unix.c $(TESTS) libuv.a
 	$(CC) $(CPPFLAGS) $(RUNNER_CFLAGS) -o test/run-tests test/run-tests.c \
 		test/runner.c $(RUNNER_SRC) $(TESTS) libuv.a $(RUNNER_LIBS) $(RUNNER_LINKFLAGS)
