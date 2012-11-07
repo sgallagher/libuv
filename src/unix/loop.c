@@ -20,6 +20,7 @@
  */
 
 #include "uv.h"
+#include "ev-proto.h"
 #include "tree.h"
 #include "internal.h"
 #include <stdlib.h>
